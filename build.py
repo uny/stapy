@@ -1,5 +1,6 @@
 __author__ = 'ynagai'
 
+import htmlmin
 import jinja2
 import os
 import shutil
@@ -58,6 +59,7 @@ class StaPy:
                 dst = os.path.join(self._dst, name)
                 rendered = env.get_template(name).render()
                 rendered = rendered.replace('=\"/static/', '=\"')
+                rendered = htmlmin.minify(rendered)
                 with open(dst, 'w', encoding='utf-8') as f:
                     f.write(rendered)
 
